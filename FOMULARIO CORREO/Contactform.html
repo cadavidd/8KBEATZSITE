@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Contacto</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Tu archivo de estilos CSS -->
+</head>
+<body>
+    <!-- Contenedor para el logo -->
+    <div class="logo-container">
+        <img src="C:\Users\JORGE LUIS NIÑO\3D Objects\FREEFORPROFITSPONSORED WEBSITE\FOMULARIO CORREO\Phantom.png" alt="Logo" class="logo">
+    </div>
+
+    <!-- Contenedor del formulario -->
+    <div class="form-container">
+        <h1>COMPLETE TO DOWNLOAD</h1>
+        
+        <form id="contactForm" action="https://formspree.io/f/xovarnwz" method="POST">
+            <label>
+                Email:
+                <input type="email" name="email" required>
+            </label>
+            <label>
+                Message:
+                <textarea name="message" required></textarea>
+            </label>
+            <!-- Nuevo campo para seleccionar entre "ARTIST" y "PRODUCER" -->
+            <label>
+                Tell us about you (Required)
+                <select name="user_type" required>
+                    <option value="Artist">ARTIST</option>
+                    <option value="Producer">PRODUCER</option>
+                </select>
+            </label>
+            <label>
+                What do you want to Download?
+                <select id="redirectSelect" required>
+                    <option value="C:\Users\JORGE LUIS NIÑO\3D Objects\FREEFORPROFITSPONSORED WEBSITE\index.html">FREE FOR PROFIT BEATS</option>
+                    <option value="C:\Users\JORGE LUIS NIÑO\3D Objects\FREEFORPROFITSPONSORED WEBSITE\SAMPLES PAGE\Samples page.html">SAMPLE PACKS</option>
+                
+                </select>
+            </label>
+            <button type="submit">SUBMIT AND DOWNLOAD</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevenir el envío del formulario
+            const redirectUrl = document.getElementById('redirectSelect').value;
+            submitForm(redirectUrl);
+        });
+
+        async function submitForm(redirectUrl) {
+            const form = document.getElementById('contactForm');
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch(form.action, {
+                    method: form.method,
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    window.location.href = redirectUrl;
+                } else {
+                    alert("Hubo un problema al enviar el formulario. Por favor, inténtalo de nuevo.");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Ocurrió un error inesperado. Por favor, inténtalo de nuevo.");
+            }
+        }
+    </script>
+</body>
+</html>

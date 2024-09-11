@@ -57,9 +57,22 @@
     <script>
         document.getElementById('contactForm').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevenir el envío del formulario
+            const email = document.querySelector('input[name="email"]').value;
+            const message = document.querySelector('textarea[name="message"]').value;
+            const userType = document.querySelector('select[name="user_type"]').value;
             const redirectUrl = document.getElementById('redirectSelect').value;
-            submitForm(redirectUrl);
+
+            if (validateEmail(email) && message && userType) {
+                submitForm(redirectUrl);
+            } else {
+                alert("Por favor, completa el formulario con información válida.");
+            }
         });
+
+        function validateEmail(email) {
+            const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            return re.test(email);
+        }
 
         async function submitForm(redirectUrl) {
             const form = document.getElementById('contactForm');
